@@ -1,0 +1,18 @@
+# Virtual environment
+tutorbot-env/
+venv/
+.env/
+
+# Secrets
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Playwright/cache/screenshots/logs
+*.log
+*.png
+
+# VS Code settings, optional
+.vscode/
