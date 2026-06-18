@@ -5,6 +5,7 @@ venv/
 
 # Secrets
 .env
+auth.json
 
 # Python cache
 __pycache__/
