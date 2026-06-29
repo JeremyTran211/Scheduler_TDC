@@ -104,7 +104,6 @@ def main():
             page.screenshot(path="bot_failed.png")
 
         finally:
-            input("Review the browser, then press Enter to close...")
             browser.close()
             print("Browser has been closed! ~~~")
 
