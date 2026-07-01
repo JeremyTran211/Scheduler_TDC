@@ -40,7 +40,7 @@ def main():
         return
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=300)
+        browser = p.chromium.launch(headless=True, slow_mo=300)
         page = browser.new_page()
 
         try:
@@ -77,7 +77,7 @@ def main():
             # Highlight desired cells
             selected_count = 0
 
-            for selector in SUNDAY_CELLS:
+            for selector in DESIRED_CELLS:
                 try:
                     cell = page1.locator(selector)
                     cell.wait_for(state="visible", timeout=3000)

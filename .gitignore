@@ -17,3 +17,6 @@ __pycache__/
 
 # VS Code settings, optional
 .vscode/
+
+# Scripts 
+run_bot_rotating.sh
