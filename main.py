@@ -9,6 +9,11 @@ TUTOR_PASSWORD = os.getenv("TUTOR_PASSWORD")
 
 LOGIN_URL = "https://www.tutor.com/providers/schedule"
 
+# Each day increments by 7 to the next hour, starting at 12am EST
+# Sunday: 0, Monday: 1, Tuesday: 2...
+# Sunday: 7, Monday: 8, Tuesday: 9...
+
+# Regular hours: Wednesay 6-9pm, Thursday 7-9pm
 DESIRED_CELLS = [
     "#cell150",
     "#cell157",
@@ -17,6 +22,14 @@ DESIRED_CELLS = [
     "#cell165",
 ]
 
+# Sunday 11am - 4pm 
+SUNDAY_CELLS = [
+    "#cell98", 
+    "#cell105", 
+    "#cell112",
+    "#cell119",
+    "#cell126",
+]
 
 def main():
     print("Email loaded:", TUTOR_EMAIL is not None)
@@ -64,7 +77,7 @@ def main():
             # Highlight desired cells
             selected_count = 0
 
-            for selector in DESIRED_CELLS:
+            for selector in SUNDAY_CELLS:
                 try:
                     cell = page1.locator(selector)
                     cell.wait_for(state="visible", timeout=3000)
