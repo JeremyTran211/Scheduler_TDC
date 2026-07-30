@@ -1,0 +1,9 @@
+services:
+  scheduler:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+      - ./screenshots:/app/screenshots
+    restart: "no"
