@@ -98,16 +98,49 @@ def main():
 
             print("Schedule button visible:", schedule_button.is_visible())
             print("Schedule button enabled:", schedule_button.is_enabled())
-
-            # Autonomous submit
+            
             if schedule_button.is_enabled():
                 schedule_button.click()
                 print("Clicked Schedule Selected.")
                 page1.screenshot(path="schedule_submitted.png")
+
+                # --- Verification step ---
+                # Give the server a moment to process the submission
+                page1.wait_for_timeout(2000)
+                page1.wait_for_load_state("networkidle")
+
+                # Reload to get a fresh, authoritative view of the schedule
+                page1.reload()
+                page1.wait_for_load_state("networkidle")
+                page1.locator("#weekAhead").click()   # re-navigate to the same week (reload resets it)
+                page1.wait_for_timeout(1000)
+
+                scheduled_cells = []
+                missing_cells = []
+
+                for selector in DESIRED_CELLS:
+                    cell = page1.locator(selector)
+                    cell_text = cell.inner_text().strip()
+                    cell_class = cell.get_attribute("class") or ""
+
+                    if "FILLED" in cell_class or cell_text == "Scheduled!":
+                        scheduled_cells.append(selector)
+                    else:
+                        missing_cells.append(f"{selector} (state: {cell_text or cell_class})")
+
+                print(f"Verified scheduled: {scheduled_cells}")
+                print(f"Missing: {missing_cells}")
+
+                if missing_cells:
+                    print(f"WARNING: {len(missing_cells)} of {len(DESIRED_CELLS)} cells were NOT scheduled.")
+                    page1.screenshot(path="verification_mismatch.png")
+                else:
+                    print("All desired cells confirmed scheduled.")
+
             else:
                 print("Schedule button is disabled/grayed out. Not clicking.")
                 page1.screenshot(path="schedule_button_disabled.png")
-
+            
         except PlaywrightTimeoutError as e:
             print("Timeout error:", e)
             page.screenshot(path="timeout_error.png")
