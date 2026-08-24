@@ -40,7 +40,7 @@ def main():
         return
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False, slow_mo=300)
+        browser = p.chromium.launch(headless=True, slow_mo=300)
         page = browser.new_page()
 
         try:
@@ -151,7 +151,7 @@ def main():
             page.screenshot(path="screenshot/bot_failed.png")
 
         finally:
-            input("Press Enter to close the browser...")
+            #input("Press Enter to close the browser...")
             browser.close()
             print("Browser has been closed! ~~~")
 
