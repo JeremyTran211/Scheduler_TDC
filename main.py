@@ -84,7 +84,7 @@ def main():
                     cell.click(modifiers=["ControlOrMeta"])
                     selected_count += 1
                     print(f"Selected {selector}")
-                    page1.screenshot(path=f"screenshot/scheduled{selector}.png")
+                    page1.screenshot(path=f"screenshots/scheduled{selector}.png")
                 except Exception as e:
                     print(f"Could not select {selector}: {e}")
 
@@ -103,7 +103,7 @@ def main():
             if schedule_button.is_enabled():
                 schedule_button.click()
                 print("Clicked Schedule Selected.")
-                page1.screenshot(path="screenshot/schedule_submitted.png")
+                page1.screenshot(path="screenshots/schedule_submitted.png")
 
                 # --- Verification step ---
                 # Give the server a moment to process the submission
@@ -134,21 +134,21 @@ def main():
 
                 if missing_cells:
                     print(f"WARNING: {len(missing_cells)} of {len(DESIRED_CELLS)} cells were NOT scheduled.")
-                    page1.screenshot(path="screenshot/verification_mismatch.png")
+                    page1.screenshot(path="screenshots/verification_mismatch.png")
                 else:
                     print("All desired cells confirmed scheduled.")
 
             else:
                 print("Schedule button is disabled/grayed out. Not clicking.")
-                page1.screenshot(path="screenshot/schedule_button_disabled.png")
+                page1.screenshot(path="screenshots/schedule_button_disabled.png")
             
         except PlaywrightTimeoutError as e:
             print("Timeout error:", e)
-            page.screenshot(path="screenshot/timeout_error.png")
+            page.screenshot(path="screenshots/timeout_error.png")
 
         except Exception as e:
             print("Bot failed:", e)
-            page.screenshot(path="screenshot/bot_failed.png")
+            page.screenshot(path="screenshots/bot_failed.png")
 
         finally:
             #input("Press Enter to close the browser...")
