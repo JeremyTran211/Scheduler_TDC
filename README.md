@@ -1,5 +1,9 @@
 # Scheduler_TDC
 
+> **This project has moved to [JeremyTran211/Homelab](https://github.com/JeremyTran211/Homelab/tree/main/apps/scheduler-tdc).**
+> Its full commit history was carried over. The bot now lives in `apps/scheduler-tdc/`, and the Pi health
+> scripts in `platform/monitoring/`. This repo is archived and no longer updated.
+
 A Python + Playwright automation project for opening Tutor.com, logging in, navigating to the Schedule Manager, and selecting scheduling hours.
 
 ## Goals
