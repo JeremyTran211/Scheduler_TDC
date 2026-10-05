@@ -1,0 +1,398 @@
+-----
+Cron check ran at Wed  1 Jul 07:37:06 BST 2026
+Today DOW: 3
+Weeks since start: 0
+Rotation: 0
+Expected DOW: 3
+Today is the assigned scheduling day. Running bot.
+Email loaded: True
+Password loaded: True
+Logged into Tutor.com main page.
+Logged into Schedule Manager.
+Clicked week ahead.
+Selected #cell150
+Selected #cell157
+Selected #cell164
+Selected #cell158
+Selected #cell165
+Selected 5 cells.
+Schedule button visible: True
+Schedule button enabled: False
+Schedule button is disabled/grayed out. Not clicking.
+Browser has been closed! ~~~
+-----
+Cron check ran at Wed  1 Jul 07:48:01 BST 2026
+Today DOW: 3
+Weeks since start: 0
+Rotation: 0
+Expected DOW: 3
+Today is the assigned scheduling day. Running bot.
+Email loaded: True
+Password loaded: True
+Logged into Tutor.com main page.
+Logged into Schedule Manager.
+Clicked week ahead.
+Selected #cell150
+Selected #cell157
+Selected #cell164
+Selected #cell158
+Selected #cell165
+Selected 5 cells.
+Schedule button visible: True
+Schedule button enabled: False
+Schedule button is disabled/grayed out. Not clicking.
+Browser has been closed! ~~~
+-----
+Cron check ran at Tue 30 Jun 23:52:01 PDT 2026
+Today DOW: 2
+Weeks since start: 0
+Rotation: 0
+Expected DOW: 3
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Wed  1 Jul 09:01:01 PDT 2026
+Today DOW: 3
+Weeks since start: 0
+Rotation: 0
+Expected DOW: 3
+Today is the assigned scheduling day. Running bot.
+Email loaded: True
+Password loaded: True
+Logged into Tutor.com main page.
+Logged into Schedule Manager.
+Clicked week ahead.
+Selected #cell150
+Selected #cell157
+Selected #cell164
+Selected #cell158
+Selected #cell165
+Selected 5 cells.
+Schedule button visible: True
+Schedule button enabled: True
+Clicked Schedule Selected.
+Browser has been closed! ~~~
+-----
+Cron check ran at Thu  2 Jul 09:01:01 PDT 2026
+Today DOW: 4
+Weeks since start: 0
+Rotation: 0
+Expected DOW: 3
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Fri  3 Jul 09:01:01 PDT 2026
+Today DOW: 5
+Weeks since start: 0
+Rotation: 0
+Expected DOW: 3
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Wed  8 Jul 09:01:01 PDT 2026
+Today DOW: 3
+Weeks since start: 1
+Rotation: 1
+Expected DOW: 4
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Thu  9 Jul 09:01:01 PDT 2026
+Today DOW: 4
+Weeks since start: 1
+Rotation: 1
+Expected DOW: 4
+Today is the assigned scheduling day. Running bot.
+Email loaded: True
+Password loaded: True
+Logged into Tutor.com main page.
+Logged into Schedule Manager.
+Clicked week ahead.
+Selected #cell150
+Selected #cell157
+Selected #cell164
+Selected #cell158
+Selected #cell165
+Selected 5 cells.
+Schedule button visible: True
+Schedule button enabled: True
+Clicked Schedule Selected.
+Browser has been closed! ~~~
+-----
+Cron check ran at Fri 10 Jul 09:01:01 PDT 2026
+Today DOW: 5
+Weeks since start: 1
+Rotation: 1
+Expected DOW: 4
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Wed 15 Jul 09:01:01 PDT 2026
+Today DOW: 3
+Weeks since start: 2
+Rotation: 2
+Expected DOW: 5
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Thu 16 Jul 09:01:01 PDT 2026
+Today DOW: 4
+Weeks since start: 2
+Rotation: 2
+Expected DOW: 5
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Fri 17 Jul 09:01:01 PDT 2026
+Today DOW: 5
+Weeks since start: 2
+Rotation: 2
+Expected DOW: 5
+Today is the assigned scheduling day. Running bot.
+Email loaded: True
+Password loaded: True
+Logged into Tutor.com main page.
+Logged into Schedule Manager.
+Clicked week ahead.
+Selected #cell150
+Selected #cell157
+Selected #cell164
+Selected #cell158
+Selected #cell165
+Selected 5 cells.
+Schedule button visible: True
+Schedule button enabled: True
+Clicked Schedule Selected.
+Browser has been closed! ~~~
+-----
+Cron check ran at Tue 21 Jul 23:14:01 PDT 2026
+Today DOW: 2
+Weeks since start: 2
+Rotation: 2
+Expected DOW: 5
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Tue 21 Jul 23:14:03 PDT 2026
+Today DOW: 2
+Weeks since start: 2
+Rotation: 2
+Expected DOW: 5
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Tue 21 Jul 23:14:05 PDT 2026
+Today DOW: 2
+Weeks since start: 2
+Rotation: 2
+Expected DOW: 5
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Tue 21 Jul 23:21:48 PDT 2026
+Today DOW: 2
+Weeks since start: 2
+Rotation: 2
+Expected DOW: 5
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Wed 22 Jul 09:01:01 PDT 2026
+Today DOW: 3
+Weeks since start: 3
+Rotation: 0
+Expected DOW: 3
+Today is the assigned scheduling day. Running bot.
+ Container scheduler_tdc-scheduler-run-465465230425 Creating 
+ Container scheduler_tdc-scheduler-run-465465230425 Created 
+Email loaded: True
+Password loaded: True
+Logged into Tutor.com main page.
+Logged into Schedule Manager.
+Clicked week ahead.
+Selected #cell150
+Selected #cell157
+Selected #cell164
+Selected #cell158
+Selected #cell165
+Selected 5 cells.
+Schedule button visible: True
+Schedule button enabled: True
+Clicked Schedule Selected.
+Browser has been closed! ~~~
+-----
+Cron check ran at Thu 23 Jul 09:01:01 PDT 2026
+Today DOW: 4
+Weeks since start: 3
+Rotation: 0
+Expected DOW: 3
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Fri 24 Jul 09:01:01 PDT 2026
+Today DOW: 5
+Weeks since start: 3
+Rotation: 0
+Expected DOW: 3
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Wed 29 Jul 09:01:01 PDT 2026
+Today DOW: 3
+Weeks since start: 4
+Rotation: 1
+Expected DOW: 4
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Thu 30 Jul 09:01:01 PDT 2026
+Today DOW: 4
+Weeks since start: 4
+Rotation: 1
+Expected DOW: 4
+Today is the assigned scheduling day. Running bot.
+ Container scheduler_tdc-scheduler-run-42e50e478560 Creating 
+ Container scheduler_tdc-scheduler-run-42e50e478560 Created 
+Email loaded: True
+Password loaded: True
+Logged into Tutor.com main page.
+Logged into Schedule Manager.
+Clicked week ahead.
+Selected #cell150
+Selected #cell157
+Selected #cell164
+Selected #cell158
+Selected #cell165
+Selected 5 cells.
+Schedule button visible: True
+Schedule button enabled: True
+Clicked Schedule Selected.
+Browser has been closed! ~~~
+-----
+Cron check ran at Fri 31 Jul 09:01:01 PDT 2026
+Today DOW: 5
+Weeks since start: 4
+Rotation: 1
+Expected DOW: 4
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Wed  5 Aug 09:01:01 PDT 2026
+Today DOW: 3
+Weeks since start: 5
+Rotation: 2
+Expected DOW: 5
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Thu  6 Aug 09:01:01 PDT 2026
+Today DOW: 4
+Weeks since start: 5
+Rotation: 2
+Expected DOW: 5
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Fri  7 Aug 09:01:01 PDT 2026
+Today DOW: 5
+Weeks since start: 5
+Rotation: 2
+Expected DOW: 5
+Today is the assigned scheduling day. Running bot.
+ Container scheduler_tdc-scheduler-run-f7a84d60d26f Creating 
+ Container scheduler_tdc-scheduler-run-f7a84d60d26f Created 
+Email loaded: True
+Password loaded: True
+Logged into Tutor.com main page.
+Logged into Schedule Manager.
+Clicked week ahead.
+Selected #cell150
+Selected #cell157
+Selected #cell164
+Selected #cell158
+Selected #cell165
+Selected 5 cells.
+Schedule button visible: True
+Schedule button enabled: True
+Clicked Schedule Selected.
+Browser has been closed! ~~~
+-----
+Cron check ran at Wed 12 Aug 09:01:01 PDT 2026
+Today DOW: 3
+Weeks since start: 6
+Rotation: 0
+Expected DOW: 3
+Today is the assigned scheduling day. Running bot.
+ Container scheduler_tdc-scheduler-run-62f0a1ed9504 Creating 
+ Container scheduler_tdc-scheduler-run-62f0a1ed9504 Created 
+Email loaded: True
+Password loaded: True
+Logged into Tutor.com main page.
+Logged into Schedule Manager.
+Clicked week ahead.
+Selected #cell150
+Selected #cell157
+Selected #cell164
+Selected #cell158
+Selected #cell165
+Selected 5 cells.
+Schedule button visible: True
+Schedule button enabled: True
+Clicked Schedule Selected.
+Browser has been closed! ~~~
+-----
+Cron check ran at Thu 13 Aug 09:01:01 PDT 2026
+Today DOW: 4
+Weeks since start: 6
+Rotation: 0
+Expected DOW: 3
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Fri 14 Aug 09:01:01 PDT 2026
+Today DOW: 5
+Weeks since start: 6
+Rotation: 0
+Expected DOW: 3
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Wed 19 Aug 09:01:01 PDT 2026
+Today DOW: 3
+Weeks since start: 7
+Rotation: 1
+Expected DOW: 4
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Thu 20 Aug 09:01:01 PDT 2026
+Today DOW: 4
+Weeks since start: 7
+Rotation: 1
+Expected DOW: 4
+Today is the assigned scheduling day. Running bot.
+ Container scheduler_tdc-scheduler-run-10dceea401ef Creating 
+ Container scheduler_tdc-scheduler-run-10dceea401ef Created 
+Email loaded: True
+Password loaded: True
+Logged into Tutor.com main page.
+Logged into Schedule Manager.
+Clicked week ahead.
+Selected #cell150
+Selected #cell157
+Selected #cell164
+Selected #cell158
+Selected #cell165
+Selected 5 cells.
+Schedule button visible: True
+Schedule button enabled: True
+Clicked Schedule Selected.
+Browser has been closed! ~~~
+-----
+Cron check ran at Fri 21 Aug 09:01:01 PDT 2026
+Today DOW: 5
+Weeks since start: 7
+Rotation: 1
+Expected DOW: 4
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Mon 24 Aug 23:58:01 PDT 2026
+Today DOW: 1
+Weeks since start: 7
+Rotation: 1
+Expected DOW: 4
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Tue 25 Aug 23:58:01 PDT 2026
+Today DOW: 2
+Weeks since start: 7
+Rotation: 1
+Expected DOW: 4
+Today is not the assigned scheduling day. Skipping bot.
+-----
+Cron check ran at Wed 26 Aug 09:01:01 PDT 2026
+Today DOW: 3
+Weeks since start: 8
+Rotation: 2
+Expected DOW: 5
+Today is not the assigned scheduling day. Skipping bot.
