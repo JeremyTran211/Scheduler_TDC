@@ -1,6 +1,7 @@
 services:
   scheduler:
     build: .
+    image: scheduler-tdc:latest
     env_file:
       - .env
     volumes:

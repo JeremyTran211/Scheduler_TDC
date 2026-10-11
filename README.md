@@ -1,219 +1,58 @@
 # Scheduler_TDC
 
-A Python + Playwright automation project for opening Tutor.com, logging in, navigating to the Schedule Manager, and selecting scheduling hours.
+A Playwright bot that books my weekly Tutor.com hours. It logs in, opens the Schedule Manager,
+jumps to next week, selects the configured hours, submits them, then reloads the page
+to verify they were booked.
 
-## Goals
+It runs on my homelab: a Raspberry Pi with Docker, started by cron every Wednesday at 9:01am.
+How it's deployed there (host, schedule, secrets) is documented in the
+[Homelab repo](https://github.com/JeremyTran211/Homelab).
 
-* Open Tutor.com provider schedule page
-* Log in using credentials from a local `.env` file
-* Open Schedule Manager
-* Select desired schedule cells
-* Submit selected hours
-* Eventually add better error handling, unavailable-cell detection, and scheduled execution
+## Files
 
-## Requirements
+| File | Purpose |
+|---|---|
+| `main.py` | The bot |
+| `run.sh` | Entry point for cron: runs the container, uploads the log and screenshots to S3, prunes old files |
+| `Dockerfile`, `docker-compose.yml` | Image built on Playwright's Python image; `.env`, `logs/` and `screenshots/` mounted at runtime |
+| `.env.example` | Template for the real `.env` (never committed) |
 
-* Python
-* Playwright
-* python-dotenv
+## Configuration (`.env`)
 
-## Environment Variables
+| Variable | Meaning |
+|---|---|
+| `TUTOR_EMAIL`, `TUTOR_PASSWORD` | Tutor.com login |
+| `S3_BUCKET` | `s3://bucket-name` for logs and screenshots |
+| `SCHEDULE` | `regular` (Wed 6–9pm, Thu 7–9pm) or `sunday` (Sun 11am–4pm) |
 
-Create a local `.env` file:
+Cell IDs follow `day + 7 × hour` (Sunday = 0, hours counted from 12am Eastern). They're listed in `main.py`.
 
-```env
-TUTOR_EMAIL=your_email_here
-TUTOR_PASSWORD=your_password_here
-```
+## Exit codes
 
-Do not commit `.env` to GitHub.
+| Code | Meaning |
+|---|---|
+| 0 | All hours booked (or already booked) |
+| 1 | Error: login, timeout, missing config |
+| 2 | Ran, but some hours aren't booked. Check `verification_mismatch.png`. |
 
----
-
-## Setup
-
-### Clone Repo
-
-```bash
-git clone https://github.com/JeremyTran211/Scheduler_TDC.git
-cd Scheduler_TDC
-```
-
----
-
-## Mac Commands
-
-### Create Virtual Environment
+## Run it
 
 ```bash
-python3 -m venv tutorbot-env
+cp .env.example .env && nano .env
+docker compose build
+DRY_RUN=1 ./run.sh                    # check paths and .env without booking anything
+./run.sh                              # what cron runs (really books hours)
+docker compose run --rm scheduler     # just the bot, no upload (really books hours)
 ```
 
-### Activate Virtual Environment
+Output goes to `logs/` and `screenshots/<date>/`. Both are gitignored.
+
+### Local development (Mac/Windows)
 
 ```bash
-source tutorbot-env/bin/activate
-```
-
-### Deactivate Virtual Environment
-
-```bash
-deactivate
-```
-
-### Install Dependencies
-
-```bash
-python3 -m pip install -r requirements.txt
-```
-
-### Install Playwright Chromium Browser
-
-```bash
-python3 -m playwright install chromium
-```
-
-### Create `.env`
-
-```bash
-nano .env
-```
-
-### Run Program
-
-```bash
-python3 main.py
-```
-
-### Generate Playwright Code
-
-```bash
-python3 -m playwright codegen https://www.tutor.com/providers/schedule
-```
-
----
-
-## Windows Commands
-
-### Create Virtual Environment
-
-```powershell
-python -m venv tutorbot-env
-```
-
-### Activate Virtual Environment
-
-Command Prompt:
-
-```bat
-tutorbot-env\Scripts\activate
-```
-
-PowerShell:
-
-```powershell
-.\tutorbot-env\Scripts\Activate.ps1
-```
-
-### Deactivate Virtual Environment
-
-```powershell
-deactivate
-```
-
-### Install Dependencies
-
-```powershell
-python -m pip install -r requirements.txt
-```
-
-### Install Playwright Chromium Browser
-
-```powershell
+python3 -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 python -m playwright install chromium
-```
-
-### Create `.env`
-
-```powershell
-notepad .env
-```
-
-### Run Program
-
-```powershell
 python main.py
-```
-
-### Generate Playwright Code
-
-```powershell
-python -m playwright codegen https://www.tutor.com/providers/schedule
-```
-
----
-
-## Updating Dependencies
-
-After installing new packages, update `requirements.txt`.
-
-Mac:
-
-```bash
-python3 -m pip freeze > requirements.txt
-```
-
-Windows:
-
-```powershell
-python -m pip freeze > requirements.txt
-```
-
----
-
-## Git Commands
-
-Check status:
-
-```bash
-git status
-```
-
-Add files:
-
-```bash
-git add .
-```
-
-Commit changes:
-
-```bash
-git commit -m "Your message"
-```
-
-Push changes:
-
-```bash
-git push
-```
-
-Pull latest changes:
-
-```bash
-git pull
-```
-
----
-
-## Do Not Commit
-
-Make sure `.gitignore` includes:
-
-```gitignore
-.env
-tutorbot-env/
-__pycache__/
-*.pyc
-*.log
-*.png
+python -m playwright codegen https://www.tutor.com/providers/schedule   # record selectors
 ```
