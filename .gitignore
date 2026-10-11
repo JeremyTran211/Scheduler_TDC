@@ -1,22 +1,23 @@
-# Virtual environment
-tutorbot-env/
-venv/
-.env/
-
-# Secrets
+# Secrets: real values live only on the host, never in git
 .env
 auth.json
 
-# Python cache
+# Python
+.venv/
+venv/
+tutorbot-env/
 __pycache__/
 *.pyc
 
-# Playwright/cache/screenshots/logs
-*.log
-*.png
+# Runtime output (shipped to S3 by run.sh)
+logs/
 screenshots/
+*.log
+*.log.old
+*.png
+*.db
 
-# VS Code settings, optional
+# Editors / OS
 .vscode/
-
-# Scripts 
+.idea/
+.DS_Store
