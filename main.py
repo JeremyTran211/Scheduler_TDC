@@ -1,4 +1,7 @@
 import os
+import sys
+from datetime import date
+
 from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
@@ -6,6 +9,13 @@ load_dotenv()
 
 TUTOR_EMAIL = os.getenv("TUTOR_EMAIL")
 TUTOR_PASSWORD = os.getenv("TUTOR_PASSWORD")
+
+# Which set of cells to book: "regular" (default) or "sunday"
+SCHEDULE = os.getenv("SCHEDULE", "regular").lower()
+
+# run.sh passes the host's date so screenshots land in the same folder it uploads to S3
+RUN_DATE = os.getenv("RUN_DATE") or date.today().isoformat()
+SCREENSHOT_DIR = os.path.join("screenshots", RUN_DATE)
 
 LOGIN_URL = "https://www.tutor.com/providers/schedule"
 
@@ -22,14 +32,54 @@ DESIRED_CELLS = [
     "#cell165",
 ]
 
-# Sunday 11am - 4pm 
+# Sunday 11am - 4pm
 SUNDAY_CELLS = [
-    "#cell98", 
-    "#cell105", 
+    "#cell98",
+    "#cell105",
     "#cell112",
     "#cell119",
     "#cell126",
 ]
+
+SCHEDULES = {
+    "regular": DESIRED_CELLS,
+    "sunday": SUNDAY_CELLS,
+}
+
+# Exit codes, so cron/run.sh (and later alerts) can tell what happened
+EXIT_OK = 0
+EXIT_FAILED = 1
+EXIT_NOT_SCHEDULED = 2
+
+
+def screenshot(page, name):
+    os.makedirs(SCREENSHOT_DIR, exist_ok=True)
+    path = os.path.join(SCREENSHOT_DIR, f"{name}.png")
+    try:
+        page.screenshot(path=path)
+    except Exception as e:
+        print(f"Could not save screenshot {path}: {e}")
+
+
+def verify_cells(page, cells):
+    """Returns (scheduled, missing) based on what the Schedule Manager currently shows."""
+    scheduled_cells = []
+    missing_cells = []
+
+    for selector in cells:
+        cell = page.locator(selector)
+        cell_text = cell.inner_text().strip()
+        cell_class = cell.get_attribute("class") or ""
+
+        if "FILLED" in cell_class or cell_text == "Scheduled!":
+            scheduled_cells.append(selector)
+        else:
+            missing_cells.append(f"{selector} (state: {cell_text or cell_class})")
+
+    print(f"Verified scheduled: {scheduled_cells}")
+    print(f"Missing: {missing_cells}")
+    return scheduled_cells, missing_cells
+
 
 def main():
     print("Email loaded:", TUTOR_EMAIL is not None)
@@ -37,11 +87,19 @@ def main():
 
     if not TUTOR_EMAIL or not TUTOR_PASSWORD:
         print("Missing TUTOR_EMAIL or TUTOR_PASSWORD in .env")
-        return
+        return EXIT_FAILED
+
+    if SCHEDULE not in SCHEDULES:
+        print(f"Unknown SCHEDULE '{SCHEDULE}'. Use one of: {', '.join(SCHEDULES)}")
+        return EXIT_FAILED
+
+    cells = SCHEDULES[SCHEDULE]
+    print(f"Schedule: {SCHEDULE} ({len(cells)} cells)")
 
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True, slow_mo=300)
         page = browser.new_page()
+        page1 = None
 
         try:
             # Go to Tutor.com provider schedule page
@@ -77,14 +135,14 @@ def main():
             # Highlight desired cells
             selected_count = 0
 
-            for selector in DESIRED_CELLS:
+            for selector in cells:
                 try:
                     cell = page1.locator(selector)
                     cell.wait_for(state="visible", timeout=3000)
                     cell.click(modifiers=["ControlOrMeta"])
                     selected_count += 1
                     print(f"Selected {selector}")
-                    page1.screenshot(path=f"screenshots/scheduled{selector}.png")
+                    screenshot(page1, f"selected_{selector.lstrip('#')}")
                 except Exception as e:
                     print(f"Could not select {selector}: {e}")
 
@@ -99,11 +157,11 @@ def main():
 
             print("Schedule button visible:", schedule_button.is_visible())
             print("Schedule button enabled:", schedule_button.is_enabled())
-            
+
             if schedule_button.is_enabled():
                 schedule_button.click()
                 print("Clicked Schedule Selected.")
-                page1.screenshot(path="screenshots/schedule_submitted.png")
+                screenshot(page1, "schedule_submitted")
 
                 # --- Verification step ---
                 # Give the server a moment to process the submission
@@ -115,46 +173,36 @@ def main():
                 page1.wait_for_load_state("networkidle")
                 page1.locator("#weekAhead").click()   # re-navigate to the same week (reload resets it)
                 page1.wait_for_timeout(1000)
-
-                scheduled_cells = []
-                missing_cells = []
-
-                for selector in DESIRED_CELLS:
-                    cell = page1.locator(selector)
-                    cell_text = cell.inner_text().strip()
-                    cell_class = cell.get_attribute("class") or ""
-
-                    if "FILLED" in cell_class or cell_text == "Scheduled!":
-                        scheduled_cells.append(selector)
-                    else:
-                        missing_cells.append(f"{selector} (state: {cell_text or cell_class})")
-
-                print(f"Verified scheduled: {scheduled_cells}")
-                print(f"Missing: {missing_cells}")
-
-                if missing_cells:
-                    print(f"WARNING: {len(missing_cells)} of {len(DESIRED_CELLS)} cells were NOT scheduled.")
-                    page1.screenshot(path="screenshots/verification_mismatch.png")
-                else:
-                    print("All desired cells confirmed scheduled.")
-
             else:
+                # Disabled usually means the hours are already booked or unavailable.
+                # Check which one it is instead of assuming.
                 print("Schedule button is disabled/grayed out. Not clicking.")
-                page1.screenshot(path="screenshots/schedule_button_disabled.png")
-            
+                screenshot(page1, "schedule_button_disabled")
+
+            _, missing_cells = verify_cells(page1, cells)
+
+            if missing_cells:
+                print(f"WARNING: {len(missing_cells)} of {len(cells)} cells were NOT scheduled.")
+                screenshot(page1, "verification_mismatch")
+                return EXIT_NOT_SCHEDULED
+
+            print("All desired cells confirmed scheduled.")
+            return EXIT_OK
+
         except PlaywrightTimeoutError as e:
             print("Timeout error:", e)
-            page.screenshot(path="screenshots/timeout_error.png")
+            screenshot(page1 or page, "timeout_error")
+            return EXIT_FAILED
 
         except Exception as e:
             print("Bot failed:", e)
-            page.screenshot(path="screenshots/bot_failed.png")
+            screenshot(page1 or page, "bot_failed")
+            return EXIT_FAILED
 
         finally:
-            #input("Press Enter to close the browser...")
             browser.close()
             print("Browser has been closed! ~~~")
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

@@ -1,0 +1,11 @@
+# Keep secrets and runtime data out of the image
+.env
+logs/
+screenshots/
+*.log
+*.png
+*.db
+.venv/
+venv/
+tutorbot-env/
+__pycache__/
