@@ -1,6 +1,6 @@
 #!/bin/bash
 # Runs the Tutor.com scheduler, then ships the log and screenshots to S3.
-# cron decides which day it runs (see hosts/pi/crontab in the Homelab repo).
+# cron decides which day it runs (see pi.crontab in the Homelab repo).
 #
 # Exit code is the bot's exit code (0 ok, 1 failed, 2 hours not scheduled).
 #
@@ -36,13 +36,25 @@ STATUS=$?
 echo "Bot exit code: $STATUS" >> "$LOGFILE"
 
 # --- Upload this run's log and screenshots to S3 ---
+UPLOAD="skipped"
 if [ -n "$S3_BUCKET" ]; then
-    aws s3 cp "$LOGFILE" "$S3_BUCKET/$DATE/cron.log" >> "$LOGFILE" 2>&1
+    UPLOAD="ok"
+    aws s3 cp "$LOGFILE" "$S3_BUCKET/$DATE/cron.log" >> "$LOGFILE" 2>&1 || UPLOAD="failed"
     if [ -d "screenshots/$DATE" ]; then
-        aws s3 sync "screenshots/$DATE/" "$S3_BUCKET/$DATE/screenshots/" >> "$LOGFILE" 2>&1
+        aws s3 sync "screenshots/$DATE/" "$S3_BUCKET/$DATE/screenshots/" >> "$LOGFILE" 2>&1 || UPLOAD="failed"
     fi
 else
     echo "S3_BUCKET not set in .env. Skipping upload." >> "$LOGFILE"
+fi
+echo "S3 upload: $UPLOAD" >> "$LOGFILE"
+
+# --- Report the result for the homelab dashboard ---
+# Writes <STATUS_DIR>/scheduler-tdc.json (default /srv/status). Skipped quietly if the folder can't be made.
+STATUS_DIR="${STATUS_DIR:-/srv/status}"
+if mkdir -p "$STATUS_DIR" 2>/dev/null; then
+    printf '{"app": "scheduler-tdc", "last_run": "%s", "exit_code": %d, "s3_upload": "%s"}\n' \
+        "$(date -Iseconds)" "$STATUS" "$UPLOAD" > "$STATUS_DIR/.scheduler-tdc.json.tmp" \
+        && mv "$STATUS_DIR/.scheduler-tdc.json.tmp" "$STATUS_DIR/scheduler-tdc.json"
 fi
 
 # --- Local cleanup ---

@@ -47,6 +47,9 @@ docker compose run --rm scheduler     # just the bot, no upload (really books ho
 
 Output goes to `logs/` and `screenshots/<date>/`. Both are gitignored.
 
+After each run, `run.sh` also writes `/srv/status/scheduler-tdc.json` (last run, exit code, S3 upload
+result) for the homelab dashboard. Set `STATUS_DIR` to write it somewhere else.
+
 ### Local development (Mac/Windows)
 
 ```bash
